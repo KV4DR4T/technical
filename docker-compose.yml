@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    hostname: technical-postgres
+    ports:
+      - "5432:5432"
+    environment:
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: root
+        POSTGRES_DB: technicaldb
+    volumes:
+        - ./data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - backend
+
+  technical-backend:
+    image: kv4dr4t/technical:0.0.1
+    container_name: technical-backend
+    hostname: technical-backend
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - backend
+
+networks:
+  backend:
